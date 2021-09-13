@@ -26,13 +26,15 @@ jobs:
       - uses: actions/checkout@v2
 
       - name: Packer GitHub Actions
+        env:
+          client_id: ${{ secrets.client_id }}    
         # You may pin to the exact commit or the version.
         # uses: hashicorp/packer-github-actions@2ef5cf325f2beace99a1742903eb52542765c08f
         uses: hashicorp/packer-github-actions@v0.2.0
         with:
           # command to execute
-          command: 
+          command: build
           # arguments for command
-          arguments: # optional
+          arguments: -on-error=cleanup -client_id=$client_id
           # file(s) to target
-          target: # default is artifacts.pkr.json
+          target: ${{ github.workspace }}/images/linux/ubuntu1804.json
