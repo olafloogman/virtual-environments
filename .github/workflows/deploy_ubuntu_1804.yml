@@ -31,7 +31,7 @@ jobs:
           azure_credentials: ${{ secrets.AZURE_CREDENTIALS }}
         with:
           # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: $azure_credentials
           # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
           enable-AzPSSession: true
           # Name of the environment. Supported values are azurecloud, azurestack, azureusgovernment, azurechinacloud, azuregermancloud. Default being azurecloud
