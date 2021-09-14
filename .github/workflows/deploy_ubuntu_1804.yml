@@ -33,10 +33,12 @@ jobs:
           echo ::set-output name=json_var::'${{ secrets.AZURE_CREDENTIALS }}' 
       - name: Packer GitHub Actions
         uses: hashicorp/packer-github-actions@master
+        env:
+          clientId: ${{ $(json_var | jq '.clientId') }}
         with:
           # command to execute
           command: build
           # arguments for command
-          arguments: -on-error=cleanup -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentUbuntu1804 -var image_version=${{ steps.date.outputs.dateformatted }} -var client_id=${{ $json_var | jq '.clientId' }} -var client_secret=${{ secrets.client_secret }} -var tenant_id=${{ secrets.tenant_id }} -var subscription_id=${{ secrets.subscription_id }}
+          arguments: -on-error=cleanup -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentUbuntu1804 -var image_version=${{ steps.date.outputs.dateformatted }} -var client_id=${{ env.clientId }} -var client_secret=${{ secrets.client_secret }} -var tenant_id=${{ secrets.tenant_id }} -var subscription_id=${{ secrets.subscription_id }}
           # file(s) to target
           target: ${{ github.workspace }}/images/linux/ubuntu1804.json
