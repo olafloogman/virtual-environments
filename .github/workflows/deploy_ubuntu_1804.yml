@@ -31,7 +31,7 @@ jobs:
         uses: hashicorp/packer-github-actions@master
         with:
           # command to execute
-          command: validate
+          command: build
           # arguments for command
           arguments: -on-error=cleanup -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentUbuntu1804 -var image_version=${{ steps.date.outputs.dateformatted }} -var client_id=${{ secrets.AZURE_CREDENTIALS.clientId }} -var client_secret=${{ secrets.client_secret }} -var tenant_id=${{ secrets.tenant_id }} -var subscription_id=${{ secrets.subscription_id }}
           # file(s) to target
