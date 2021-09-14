@@ -49,6 +49,6 @@ jobs:
           # command to execute
           command: build
           # arguments for command
-          arguments: -on-error=cleanup -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=Ubuntu2004_20210914 -var image_version=2021.09.14 -var client_id=$client_id -var client_secret=$client_secret -var tenant_id=$tenant_id -var subscription_id=$subscription_id
+          arguments: -on-error=cleanup -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=Ubuntu2004_20210914 -var image_version=2021.09.14 -var client_id=${{ secrets.client_id }} -var client_secret=${{ secrets.client_secret }} -var tenant_id=${{ secrets.tenant_id }} -var subscription_id=${{ secrets.subscription_id }}
           # file(s) to target
           target: ${{ github.workspace }}/images/linux/ubuntu1804.json
