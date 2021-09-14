@@ -29,7 +29,6 @@ jobs:
         run: echo "::set-output name=dateformatted::$(date +'%Y.%m.%d')"
       - name: Packer GitHub Actions
         env:
-
           dt: ${{ date +"%y%m%d" }}
         uses: hashicorp/packer-github-actions@master
         with:
