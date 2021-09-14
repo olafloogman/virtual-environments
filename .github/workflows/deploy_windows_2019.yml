@@ -27,12 +27,15 @@ jobs:
       - name: Get current date
         id: date
         run: echo "::set-output name=dateformatted::$(date +'%Y.%m.%d')"
+      - name: Set random pwd
+        id: pwd
+        run: echo "INSTALL_PWD=$(openssl rand -base64 32)" >> $GITHUB_ENV
       - name: Packer GitHub Actions
         uses: hashicorp/packer-github-actions@master
         with:
           # command to execute
           command: build
           # arguments for command
-          arguments: -on-error=cleanup -force -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentWindows2019 -var image_version=${{ steps.date.outputs.dateformatted }} -var client_id=${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }} -var client_secret=${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }} -var tenant_id=${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }} -var subscription_id=${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
+          arguments: -on-error=cleanup -force -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentWindows2019 -var image_version=${{ steps.date.outputs.dateformatted }} -var client_id=${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }} -var client_secret=${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }} -var tenant_id=${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }} -var subscription_id=${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }} -var install_password=${{ env.INSTALL_PWD }}
           # file(s) to target
           target: ${{ github.workspace }}/images/win/windows2019.json
