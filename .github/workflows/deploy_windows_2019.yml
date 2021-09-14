@@ -35,4 +35,4 @@ jobs:
           # arguments for command
           arguments: -on-error=cleanup -force -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentWindows2019 -var image_version=${{ steps.date.outputs.dateformatted }} -var client_id=${{ fromJson(secrets.AZURE_CREDENTIALS).clientId }} -var client_secret=${{ fromJson(secrets.AZURE_CREDENTIALS).clientSecret }} -var tenant_id=${{ fromJson(secrets.AZURE_CREDENTIALS).tenantId }} -var subscription_id=${{ fromJson(secrets.AZURE_CREDENTIALS).subscriptionId }}
           # file(s) to target
-          target: ${{ github.workspace }}/images/windows/windows2019.json
+          target: ${{ github.workspace }}/images/win/windows2019.json

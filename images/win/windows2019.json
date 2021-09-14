@@ -32,7 +32,6 @@
     ],
     "builders": [
         {
-            "name": "vhd",
             "type": "azure-arm",
             "client_id": "{{user `client_id`}}",
             "client_secret": "{{user `client_secret`}}",
@@ -42,12 +41,8 @@
             "os_disk_size_gb": "256",
             "location": "{{user `location`}}",
             "vm_size": "{{user `vm_size`}}",
-            "resource_group_name": "{{user `resource_group`}}",
-            "storage_account": "{{user `storage_account`}}",
             "build_resource_group_name": "{{user `build_resource_group_name`}}",
             "temp_resource_group_name": "{{user `temp_resource_group_name`}}",
-            "capture_container_name": "images",
-            "capture_name_prefix": "{{user `capture_name_prefix`}}",
             "virtual_network_name": "{{user `virtual_network_name`}}",
             "virtual_network_resource_group_name": "{{user `virtual_network_resource_group_name`}}",
             "virtual_network_subnet_name": "{{user `virtual_network_subnet_name`}}",
@@ -60,7 +55,16 @@
             "communicator": "winrm",
             "winrm_use_ssl": "true",
             "winrm_insecure": "true",
-            "winrm_username": "packer"
+            "winrm_username": "packer",
+            "shared_image_gallery_destination": {
+                "resource_group": "{{user `resource_group`}}",
+                "gallery_name": "{{user `gallery_name`}}",
+                "image_name": "{{user `image_name`}}",
+                "image_version": "{{user `image_version`}}",
+                "replication_regions": ["{{user `location`}}"]
+            },
+            "managed_image_name": "{{user `image_name`}}_{{user `image_version`}}",
+            "managed_image_resource_group_name": "{{user `resource_group`}}"    
         }
     ],
     "provisioners": [
