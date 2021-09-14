@@ -24,18 +24,9 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
-
-      # - name: Azure Login
-      #   uses: Azure/login@v1
-      #   with:
-      #     # Paste output of `az ad sp create-for-rbac` as value of secret variable: AZURE_CREDENTIALS
-      #     creds: ${{ secrets.AZURE_CREDENTIALS }}
-      #     # Set this value to true to enable Azure PowerShell Login in addition to Az CLI login
-      #     enable-AzPSSession: true
-      #     # Name of the environment. Supported values are azurecloud, azurestack, azureusgovernment, azurechinacloud, azuregermancloud. Default being azurecloud
-      #     # Set this value to true to enable support for accessing tenants without subscriptions
-      #     allow-no-subscriptions: false
-
+      - name: Get current date
+        id: date
+        run: echo "::set-output name=dateformatted::$(date +'%Y.%m.%d')"
       - name: Packer GitHub Actions
         env:
 
@@ -45,6 +36,6 @@ jobs:
           # command to execute
           command: validate
           # arguments for command
-          arguments: -on-error=cleanup -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentUbuntu1804 -var image_version=${{ date +"%y.%m.%d" }} -var client_id=${{ secrets.AZURE_CREDENTIALS.clientId }} -var client_secret=${{ secrets.client_secret }} -var tenant_id=${{ secrets.tenant_id }} -var subscription_id=${{ secrets.subscription_id }}
+          arguments: -on-error=cleanup -var location=australiaeast -var resource_group=ol-rg-mgmt-services-p-syd-19 -var gallery_name=olsigsyd19 -var image_name=AzDevOpsAgentUbuntu1804 -var image_version=${{ steps.date.outputs.dateformatted }} -var client_id=${{ secrets.AZURE_CREDENTIALS.clientId }} -var client_secret=${{ secrets.client_secret }} -var tenant_id=${{ secrets.tenant_id }} -var subscription_id=${{ secrets.subscription_id }}
           # file(s) to target
           target: ${{ github.workspace }}/images/linux/ubuntu1804.json
