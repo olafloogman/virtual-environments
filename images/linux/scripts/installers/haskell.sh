@@ -30,9 +30,7 @@ for majorMinorVersion in $minorMajorVersions; do
     ghcup set ghc $fullVersion
 
     # remove docs and profiling libs
-    ghc_bin_dir="$(ghcup whereis --directory ghc $fullVersion)"
-    [ -e "${ghc_bin_dir}" ] || exit 1
-    ghc_dir="$(realpath "${ghc_bin_dir}"/..)"
+    ghc_dir="$(ghcup whereis basedir)/ghc/$fullVersion"
     [ -e "${ghc_dir}" ] || exit 1
     find "${ghc_dir}" \( -name "*_p.a" -o -name "*.p_hi" \) -type f -delete
     rm -r "${ghc_dir}"/share/*
@@ -44,7 +42,6 @@ ghcup install cabal
 
 chmod -R 777 $GHCUP_INSTALL_BASE_PREFIX/.ghcup
 ln -s $GHCUP_INSTALL_BASE_PREFIX/.ghcup /etc/skel/.ghcup
-ln -s "/opt/ghc/$defaultGHCVersion/bin/ghc" "/usr/bin/ghc"
 
 # Install the latest stable release of haskell stack
 curl -sSL https://get.haskellstack.org/ | sh
